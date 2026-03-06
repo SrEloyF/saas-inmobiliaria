@@ -7,7 +7,7 @@
   ],
   "functions": {
     "api/index.ts": {
-      "includeFiles": "src/views/**/*"
+      "includeFiles": "{views,src/views}/**/*"
     }
   }
 }
