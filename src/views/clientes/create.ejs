@@ -1,0 +1,154 @@
+<%- include('../partials/header', { title: 'Crear cliente' }) %>
+<!--
+<h1>Registrar Nuevo Cliente</h1>
+
+    <form action="/clientes" method="POST">
+        <label>Tipo de Equipo:</label>
+        <select name="equipo" required>
+            <option value="Interno">Interno</option>
+            <option value="Franquiciado">Franquiciado</option>
+            <option value="Externo">Externo</option>
+        </select><br><br>
+
+        <label>Nombre Completo:</label>
+        <input type="text" name="nombre_completo" required><br><br>
+
+        <label>DNI o RUC:</label>
+        <input type="text" name="dni_ruc" required><br><br>
+
+        <label>Celular:</label>
+        <input type="text" name="celular" required><br><br>
+
+        <label>Estado Civil:</label>
+        <select name="estado_civil" required>
+            <option value="Soltero">Soltero</option>
+            <option value="Casado">Casado</option>
+            <option value="Divorciado">Divorciado</option>
+            <option value="Viudo">Viudo</option>
+        </select><br><br>
+
+        <label>Ocupación:</label>
+        <input type="text" name="ocupacion" required><br><br>
+
+        <label>Dirección:</label>
+        <input type="text" name="direccion" required><br><br>
+
+        <label>Distrito:</label>
+        <input type="text" name="distrito" required><br><br>
+
+        <label>Provincia:</label>
+        <input type="text" name="provincia" required><br><br>
+
+        <label>Departamento:</label>
+        <input type="text" name="departamento" required><br><br>
+
+        <button type="submit">Guardar Cliente</button>
+        <a href="/clientes">Cancelar</a>
+    </form>
+-->
+<div class="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">
+    
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+        
+        <div class="bg-slate-800 px-6 py-5 sm:px-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-semibold text-white tracking-wide">
+                    Registrar Nuevo Cliente
+                </h1>
+                <p class="text-slate-300 text-sm mt-1">Ingrese los datos personales y de contacto del cliente en el sistema.</p>
+            </div>
+            <a href="/clientes" class="hidden sm:inline-flex text-sm text-slate-300 hover:text-white transition-colors">
+                &larr; Volver al directorio
+            </a>
+        </div>
+
+        <form action="/clientes" method="POST" class="p-6 sm:p-8">
+            
+            <div class="mb-8">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    1. Información Personal
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="equipo" class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de Equipo</label>
+                        <select name="equipo" id="equipo" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Interno">Interno</option>
+                            <option value="Franquiciado">Franquiciado</option>
+                            <option value="Externo">Externo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="nombre_completo" class="block text-sm font-medium text-slate-700 mb-1.5">Nombre Completo</label>
+                        <input type="text" name="nombre_completo" id="nombre_completo" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="dni_ruc" class="block text-sm font-medium text-slate-700 mb-1.5">DNI o RUC</label>
+                        <input type="text" name="dni_ruc" id="dni_ruc" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="estado_civil" class="block text-sm font-medium text-slate-700 mb-1.5">Estado Civil</label>
+                        <select name="estado_civil" id="estado_civil" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                            <option value="Viudo">Viudo</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="ocupacion" class="block text-sm font-medium text-slate-700 mb-1.5">Ocupación</label>
+                        <input type="text" name="ocupacion" id="ocupacion" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    2. Contacto y Residencia
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="celular" class="block text-sm font-medium text-slate-700 mb-1.5">Celular</label>
+                        <input type="text" name="celular" id="celular" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="direccion" class="block text-sm font-medium text-slate-700 mb-1.5">Dirección</label>
+                        <input type="text" name="direccion" id="direccion" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="departamento" class="block text-sm font-medium text-slate-700 mb-1.5">Departamento</label>
+                        <input type="text" name="departamento" id="departamento" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="provincia" class="block text-sm font-medium text-slate-700 mb-1.5">Provincia</label>
+                        <input type="text" name="provincia" id="provincia" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="distrito" class="block text-sm font-medium text-slate-700 mb-1.5">Distrito</label>
+                        <input type="text" name="distrito" id="distrito" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-200 flex flex-col-reverse sm:flex-row justify-end items-center gap-4">
+                <a href="/clientes" class="w-full sm:w-auto px-6 py-2.5 bg-white border border-slate-300 text-slate-700 text-sm font-medium rounded-md shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-colors text-center">
+                    Cancelar
+                </a>
+                <button type="submit" class="w-full sm:w-auto px-8 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5">
+                    Guardar Cliente
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<%- include('../partials/footer') %>

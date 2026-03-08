@@ -85,7 +85,7 @@ model Venta {
   tipo_cambio           Decimal         @db.Decimal(6, 3)
   tipo_moneda           Moneda
   modalidad             Modalidad
-  porcentaje_inicial    Decimal         @db.Decimal(6, 2)
+  porcentaje_inicial    Decimal?         @db.Decimal(6, 2)
   numero_cuotas         Int?
   monto_total_abonado   Decimal         @db.Decimal(12, 2)
   medio_pago            MedioPago

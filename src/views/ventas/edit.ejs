@@ -1,0 +1,350 @@
+<%- include('../partials/header', { title: 'Editar venta' }) %>
+    <!--
+    <h1>Editar Venta #<%= venta.id %>
+    </h1>
+
+    <form action="/<%= venta.id %>/edit" method="POST">
+
+        <div class="form-section">
+            <h2>Datos del Cliente</h2>
+            <label for="cliente_id">Cliente asigando:</label>
+            <select name="cliente_id" id="cliente_id" required>
+                <% clientes.forEach(cliente=> { %>
+                    <option value="<%= cliente.id %>" <%=venta.id_cliente===cliente.id ? 'selected' : '' %>>
+                        <%= cliente.nombre_completo %> (DNI/RUC: <%= cliente.dni_ruc %>)
+                    </option>
+                    <% }) %>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <h2>Datos del Lote y Venta</h2>
+
+            <label>Mes de último depósito:</label>
+            <input type="date" name="mes_ultimo_deposito" value="<%= mes_ultimo_deposito_str %>" required> <br><br>
+
+            <label>Etapa:</label>
+            <input type="number" name="etapa" value="<%= venta.etapa %>" required>
+
+            <label>Manzana:</label>
+            <input type="text" name="mz" value="<%= venta.mz %>" required>
+
+            <label>Lote:</label>
+            <input type="text" name="lote" value="<%= venta.lote %>" required>
+
+            <label>Área m2:</label>
+            <input type="number" step="0.01" name="area" value="<%= venta.area %>" required><br><br>
+
+            <label>Precio de lista:</label>
+            <input type="number" step="0.1" name="precio_lista" value="<%= venta.precio_lista %>" required>
+
+            <label>Descuento:</label>
+            <input type="number" step="0.1" name="descuento" value="<%= venta.descuento %>" required>
+
+            <label>Precio final (Dólares):</label>
+            <input type="number" step="0.1" name="precio_final_dolares" value="<%= venta.precio_final_dolares %>"
+                required>
+
+            <label>Precio final (Soles):</label>
+            <input type="number" step="0.1" name="precio_final_soles" value="<%= venta.precio_final_soles %>"
+                required><br><br>
+
+            <label>Moneda:</label>
+            <select name="tipo_moneda">
+                <option value="Soles" <%=venta.tipo_moneda==='Soles' ? 'selected' : '' %>>Soles</option>
+                <option value="Dolares" <%=venta.tipo_moneda==='Dolares' ? 'selected' : '' %>>Dólares</option>
+            </select>
+
+            <label>Modalidad:</label>
+            <select name="modalidad">
+                <option value="Al_contado" <%=venta.modalidad==='Al_contado' ? 'selected' : '' %>>Al contado</option>
+                <option value="Financiado" <%=venta.modalidad==='Financiado' ? 'selected' : '' %>>Financiado</option>
+            </select>
+
+            <label>Número de cuotas:</label>
+            <input type="number" name="numero_cuotas" value="<%= venta.numero_cuotas || '' %>"><br><br>
+
+            <label>Monto total abonado:</label>
+            <input type="number" step="0.1" name="monto_total_abonado" value="<%= venta.monto_total_abonado %>"
+                required>
+
+            <label>Tipo de cambio:</label>
+            <input type="number" step="0.001" name="tipo_cambio" value="<%= venta.tipo_cambio %>" required><br><br>
+
+            <label>Medio de pago:</label>
+            <select name="medio_pago">
+                <option value="Transferencia" <%=venta.medio_pago==='Transferencia' ? 'selected' : '' %>>Transferencia
+                </option>
+                <option value="Deposito" <%=venta.medio_pago==='Deposito' ? 'selected' : '' %>>Depósito</option>
+                <option value="Cheque_de_gerencia" <%=venta.medio_pago==='Cheque_de_gerencia' ? 'selected' : '' %>
+                    >Cheque de gerencia</option>
+            </select>
+
+            <label>Banco emisor:</label>
+            <input type="text" name="banco_emisor" value="<%= venta.banco_emisor %>" required>
+
+            <label>N° operación:</label>
+            <input type="text" name="numero_operacion" value="<%= venta.numero_operacion %>" required><br><br>
+
+            <label>Tipo de comprobante:</label>
+            <select name="tipo_comprobante">
+                <option value="Boleta" <%=venta.tipo_comprobante==='Boleta' ? 'selected' : '' %>>Boleta</option>
+                <option value="Factura" <%=venta.tipo_comprobante==='Factura' ? 'selected' : '' %>>Factura</option>
+            </select><br><br>
+
+            <label>Observaciones:</label><br>
+            <textarea name="observaciones" rows="4" cols="50"><%= venta.observaciones || '' %></textarea><br><br>
+
+        </div>
+
+        <fieldset>
+            <h2>Campos adicionales</h2>
+
+            <label for="escala">Escala:</label>
+            <input type="number" name="escala" id="escala" value="<%= venta.escala || '' %>" placeholder="1">
+            <br>
+
+            <label for="porcentaje_inicial">Porcentaje inicial:</label>
+            <input type="number" step="0.01" name="porcentaje_inicial" id="porcentaje_inicial" value="<%= venta.porcentaje_inicial || '' %>">
+            <br>
+
+            <label for="fecha_firma_contrato">Fecha firma contrato:</label>
+            <input type="date" name="fecha_firma_contrato" id="fecha_firma_contrato" value="<%= fecha_firma_contrato_str %>">
+            <br>
+
+            <label for="fecha_final_pago">Fecha final pago:</label>
+            <input type="date" name="fecha_final_pago" id="fecha_final_pago" value="<%= fecha_final_pago_str %>">
+            <br>
+
+            <label for="monto_comision">Monto comisión:</label>
+            <input type="number" step="0.01" name="monto_comision" id="monto_comision" value="<%= venta.monto_comision || '' %>">
+            <br>
+
+            <label for="porcentaje_comision">Porcentaje comisión:</label>
+            <input type="number" step="0.01" name="porcentaje_comision" id="porcentaje_comision" value="<%= venta.porcentaje_comision || '' %>">
+            <br>
+
+            <label for="ventas_por_asesor">Ventas por asesor:</label>
+            <input type="number" name="ventas_por_asesor" id="ventas_por_asesor" value="<%= venta.ventas_por_asesor || '' %>">
+            <br>
+        </fieldset>
+
+        <button type="submit">Actualizar Venta</button>
+        <a href="/">Cancelar</a>
+    </form>-->
+<div class="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">
+    
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+        
+        <div class="bg-slate-800 px-6 py-5 sm:px-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-semibold text-white tracking-wide">
+                    Editar Venta <span class="text-blue-400">#<%= venta.id %></span>
+                </h1>
+                <p class="text-slate-300 text-sm mt-1">Actualice la información de la venta y los datos del contrato.</p>
+            </div>
+            <a href="/" class="hidden sm:inline-flex text-sm text-slate-300 hover:text-white transition-colors">
+                &larr; Volver a la lista
+            </a>
+        </div>
+
+        <form action="/<%= venta.id %>/edit" method="POST" class="p-6 sm:p-8">
+            
+            <div class="mb-10">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    1. Datos del Cliente
+                </h2>
+
+                <div class="max-w-md">
+                    <label for="cliente_id" class="block text-sm font-medium text-slate-700 mb-1.5">Cliente asignado</label>
+                    <select name="cliente_id" id="cliente_id" required class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 font-medium">
+                        <% clientes.forEach(cliente => { %>
+                            <option value="<%= cliente.id %>" <%= venta.id_cliente === cliente.id ? 'selected' : '' %>>
+                                <%= cliente.nombre_completo %> (DNI/RUC: <%= cliente.dni_ruc %>)
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    2. Datos del Lote y Venta
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Mes último depósito</label>
+                        <input type="date" name="mes_ultimo_deposito" value="<%= mes_ultimo_deposito_str %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Etapa</label>
+                        <input type="number" name="etapa" value="<%= venta.etapa %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Manzana</label>
+                        <input type="text" name="mz" value="<%= venta.mz %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Lote</label>
+                        <input type="text" name="lote" value="<%= venta.lote %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Área (m²)</label>
+                        <input type="number" step="0.01" name="area" value="<%= venta.area %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Precio de lista</label>
+                        <input type="number" step="0.1" name="precio_lista" value="<%= venta.precio_lista %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Descuento</label>
+                        <input type="number" step="0.1" name="descuento" value="<%= venta.descuento %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Moneda</label>
+                        <select name="tipo_moneda" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Soles" <%= venta.tipo_moneda === 'Soles' ? 'selected' : '' %>>Soles (S/)</option>
+                            <option value="Dolares" <%= venta.tipo_moneda === 'Dolares' ? 'selected' : '' %>>Dólares ($)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Precio final ($)</label>
+                        <input type="number" step="0.1" name="precio_final_dolares" value="<%= venta.precio_final_dolares %>" required class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-blue-800 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Precio final (S/)</label>
+                        <input type="number" step="0.1" name="precio_final_soles" value="<%= venta.precio_final_soles %>" required class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-blue-800 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de cambio</label>
+                        <input type="number" step="0.001" name="tipo_cambio" value="<%= venta.tipo_cambio %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Total abonado</label>
+                        <input type="number" step="0.1" name="monto_total_abonado" value="<%= venta.monto_total_abonado %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Modalidad</label>
+                        <select name="modalidad" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Al_contado" <%= venta.modalidad === 'Al_contado' ? 'selected' : '' %>>Al contado</option>
+                            <option value="Financiado" <%= venta.modalidad === 'Financiado' ? 'selected' : '' %>>Financiado</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">N° de cuotas</label>
+                        <input type="number" name="numero_cuotas" value="<%= venta.numero_cuotas || '' %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Medio de pago</label>
+                        <select name="medio_pago" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Transferencia" <%= venta.medio_pago === 'Transferencia' ? 'selected' : '' %>>Transferencia</option>
+                            <option value="Deposito" <%= venta.medio_pago === 'Deposito' ? 'selected' : '' %>>Depósito</option>
+                            <option value="Cheque_de_gerencia" <%= venta.medio_pago === 'Cheque_de_gerencia' ? 'selected' : '' %>>Cheque de gerencia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Banco emisor</label>
+                        <input type="text" name="banco_emisor" value="<%= venta.banco_emisor %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">N° operación</label>
+                        <input type="text" name="numero_operacion" value="<%= venta.numero_operacion %>" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de comprobante</label>
+                        <select name="tipo_comprobante" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Boleta" <%= venta.tipo_comprobante === 'Boleta' ? 'selected' : '' %>>Boleta</option>
+                            <option value="Factura" <%= venta.tipo_comprobante === 'Factura' ? 'selected' : '' %>>Factura</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2 lg:col-span-4">
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Observaciones</label>
+                        <textarea name="observaciones" rows="3" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800"><%= venta.observaciones || '' %></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 bg-slate-50 border border-slate-200 rounded-lg p-6">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-300 pb-2 mb-5">
+                    3. Datos del Contrato y Comisión
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <label for="escala" class="block text-sm font-medium text-slate-700 mb-1.5">Escala</label>
+                        <input type="number" name="escala" id="escala" value="<%= venta.escala || '' %>" placeholder="1" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="porcentaje_inicial" class="block text-sm font-medium text-slate-700 mb-1.5">% Inicial</label>
+                        <input type="number" step="0.01" name="porcentaje_inicial" id="porcentaje_inicial" value="<%= venta.porcentaje_inicial || '' %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="fecha_firma_contrato" class="block text-sm font-medium text-slate-700 mb-1.5">Fecha firma contrato</label>
+                        <input type="date" name="fecha_firma_contrato" id="fecha_firma_contrato" value="<%= fecha_firma_contrato_str %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="fecha_final_pago" class="block text-sm font-medium text-slate-700 mb-1.5">Fecha final pago</label>
+                        <input type="date" name="fecha_final_pago" id="fecha_final_pago" value="<%= fecha_final_pago_str %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="monto_comision" class="block text-sm font-medium text-slate-700 mb-1.5">Monto comisión</label>
+                        <input type="number" step="0.01" name="monto_comision" id="monto_comision" value="<%= venta.monto_comision || '' %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="porcentaje_comision" class="block text-sm font-medium text-slate-700 mb-1.5">% Comisión</label>
+                        <input type="number" step="0.01" name="porcentaje_comision" id="porcentaje_comision" value="<%= venta.porcentaje_comision || '' %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="ventas_por_asesor" class="block text-sm font-medium text-slate-700 mb-1.5">Ventas por asesor</label>
+                        <input type="number" name="ventas_por_asesor" id="ventas_por_asesor" value="<%= venta.ventas_por_asesor || '' %>" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-200 flex flex-col-reverse sm:flex-row justify-end items-center gap-4">
+                <a href="/" class="w-full sm:w-auto px-6 py-2.5 bg-white border border-slate-300 text-slate-700 text-sm font-medium rounded-md shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-colors text-center">
+                    Cancelar
+                </a>
+                <button type="submit" class="w-full sm:w-auto px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5">
+                    Actualizar Venta
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<script>
+    function actualizarPorcentaje() {
+        const totalAbonado = parseFloat(document.querySelector('[name="monto_total_abonado"]').value) || 0;
+        const precioFinal = parseFloat(document.querySelector('[name="precio_final_dolares"]').value) || 0;
+
+        const porcentajeInput = document.getElementById('porcentaje_inicial');
+
+        if (precioFinal > 0) {
+            const porcentaje = (totalAbonado / precioFinal) * 100;
+            porcentajeInput.value = porcentaje.toFixed(2);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const abonado = document.querySelector('[name="monto_total_abonado"]');
+        const precio = document.querySelector('[name="precio_final_dolares"]');
+        const porcentajeInput = document.getElementById('porcentaje_inicial');
+
+        if (!porcentajeInput.value) {
+            abonado.addEventListener("input", actualizarPorcentaje);
+            precio.addEventListener("input", actualizarPorcentaje);
+            actualizarPorcentaje();
+        }
+    });
+</script>
+
+<%- include('../partials/footer') %>

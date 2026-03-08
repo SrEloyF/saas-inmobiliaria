@@ -1,0 +1,434 @@
+<%- include('../partials/header', { title: 'Crear venta' }) %>
+    <!--
+    <h1>Registrar Nueva Venta</h1>
+
+    <form action="/" method="POST">
+        <div class="form-section">
+            <h2>Datos del Cliente</h2>
+
+            <label>
+                <input type="radio" name="tipo_cliente" value="existente" checked onchange="toggleClienteForm()">
+                Cliente Existente
+            </label>
+            <label>
+                <input type="radio" name="tipo_cliente" value="nuevo" onchange="toggleClienteForm()"> Nuevo Cliente
+            </label>
+
+            <div id="div-cliente-existente" style="margin-top: 15px;">
+                <label for="cliente_id">Seleccionar Cliente:</label>
+                <select name="cliente_id" id="cliente_id">
+                    <option value="">-- Seleccione un cliente --</option>
+                    <% clientes.forEach(cliente=> { %>
+                        <option value="<%= cliente.id %>">
+                            <%= cliente.nombre_completo %> (DNI/RUC: <%= cliente.dni_ruc %>)
+                        </option>
+                        <% }) %>
+                </select>
+            </div>
+
+            <div id="div-cliente-nuevo" class="hidden" style="margin-top: 15px;">
+
+                <label for="equipo">Tipo de cliente</label>
+                <select name="equipo" id="equipo">
+                    <option value="Interno">Interno</option>
+                    <option value="Franquiciado">Franquiciado</option>
+                    <option value="Externo">Externo</option>
+                </select>
+
+                <label for="nombre_completo">Nombre Completo</label>
+                <input type="text" name="nombre_completo" id="nombre_completo">
+
+                <label for="dni_ruc">DNI o RUC</label>
+                <input type="text" name="dni_ruc" id="dni_ruc">
+
+                <label for="estado_civil">Estado Civil</label>
+                <select name="estado_civil" id="estado_civil">
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Viudo">Viudo</option>
+                </select>
+
+                <label for="ocupacion">Ocupación</label>
+                <input type="text" name="ocupacion" id="ocupacion">
+
+                <label for="celular">Celular</label>
+                <input type="text" name="celular" id="celular">
+
+                <label for="direccion">Dirección</label>
+                <input type="text" name="direccion" id="direccion">
+
+                <label for="distrito">Distrito</label>
+                <input type="text" name="distrito" id="distrito">
+
+                <label for="provincia">Provincia</label>
+                <input type="text" name="provincia" id="provincia">
+
+                <label for="departamento">Departamento</label>
+                <input type="text" name="departamento" id="departamento">
+
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Datos del Lote y Venta</h2>
+
+            <label for="mes_ultimo_deposito">Mes último depósito</label><br>
+            <input type="date" id="mes_ultimo_deposito" name="mes_ultimo_deposito" required><br><br>
+
+            <label for="etapa">Etapa</label><br>
+            <input type="number" id="etapa" name="etapa" required placeholder="2"><br><br>
+
+            <label for="mz">Manzana</label><br>
+            <input type="text" id="mz" name="mz" required placeholder="A"><br><br>
+
+            <label for="lote">Lote</label><br>
+            <input type="text" id="lote" name="lote" required placeholder="15"><br><br>
+
+            <label for="area">Área m2</label><br>
+            <input type="number" step="0.01" id="area" name="area" required placeholder="110.15"><br><br>
+
+            <label for="precio_lista">Precio de lista</label><br>
+            <input type="number" step="0.1" id="precio_lista" name="precio_lista" required><br><br>
+
+            <label for="descuento">Descuento</label><br>
+            <input type="number" step="0.1" id="descuento" name="descuento" required><br><br>
+
+            <label for="precio_final_dolares">Precio final (dólares)</label><br>
+            <input type="number" step="0.1" id="precio_final_dolares" name="precio_final_dolares" required><br><br>
+
+            <label for="precio_final_soles">Precio final (soles)</label><br>
+            <input type="number" step="0.1" id="precio_final_soles" name="precio_final_soles" required><br><br>
+
+            <label for="tipo_moneda">Tipo de moneda</label><br>
+            <select id="tipo_moneda" name="tipo_moneda">
+                <option value="Soles">Soles</option>
+                <option value="Dolares">Dólares</option>
+            </select><br><br>
+
+            <label for="modalidad">Modalidad</label><br>
+            <select id="modalidad" name="modalidad">
+                <option value="Al_contado">Al contado</option>
+                <option value="Financiado">Financiado</option>
+            </select><br><br>
+
+            <label for="numero_cuotas">Número de cuotas</label><br>
+            <input type="number" id="numero_cuotas" name="numero_cuotas"><br><br>
+
+            <label for="monto_total_abonado">Monto total abonado</label><br>
+            <input type="number" id="monto_total_abonado" name="monto_total_abonado" required><br><br>
+
+            <label for="tipo_cambio">Tipo de cambio</label><br>
+            <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.01" required><br><br>
+
+            <label for="medio_pago">Medio de pago</label><br>
+            <select id="medio_pago" name="medio_pago">
+                <option value="Transferencia">Transferencia</option>
+                <option value="Deposito">Depósito</option>
+                <option value="Cheque_de_gerencia">Cheque de gerencia</option>
+            </select><br><br>
+
+            <label for="banco_emisor">Banco emisor</label><br>
+            <input type="text" id="banco_emisor" name="banco_emisor" required><br><br>
+
+            <label for="numero_operacion">N° operación</label><br>
+            <input type="text" id="numero_operacion" name="numero_operacion" required><br><br>
+
+            <label for="tipo_comprobante">Tipo de comprobante</label><br>
+            <select id="tipo_comprobante" name="tipo_comprobante">
+                <option value="Boleta">Boleta</option>
+                <option value="Factura">Factura</option>
+            </select><br><br>
+
+            <label for="observaciones">Observaciones</label><br>
+            <textarea id="observaciones" name="observaciones"></textarea><br><br>
+
+            <label for="url_archivo">Subir archivo</label><br>
+            <input type="file" name="url_archivo" id="url_archivo"><br><br>
+        </div>
+
+        <button type="submit">Guardar Venta</button>
+    </form>
+    -->
+
+<div class="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">    
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-slate-200">
+
+        <div class="bg-slate-800 px-6 py-5 sm:px-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-semibold text-white tracking-wide">
+                    Registrar Nueva Venta
+                </h1>
+                <p class="text-slate-300 text-sm mt-1">Complete los datos del cliente y los detalles del lote adquirido.</p>
+            </div>
+            <a href="/" class="hidden sm:inline-flex text-sm text-slate-300 hover:text-white transition-colors">
+                &larr; Volver a la lista
+            </a>
+        </div>
+
+        <form action="/" method="POST" class="p-6 sm:p-8">
+            
+            <div class="mb-10">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    1. Datos del Cliente
+                </h2>
+
+                <div class="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-8 bg-slate-50 p-4 rounded-lg border border-slate-100 mb-6">
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="radio" name="tipo_cliente" value="existente" checked onchange="toggleClienteForm()" 
+                               class="h-4 w-4 text-slate-800 focus:ring-slate-800 border-slate-300">
+                        <span class="ml-2 text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">Cliente Existente</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer group">
+                        <input type="radio" name="tipo_cliente" value="nuevo" onchange="toggleClienteForm()" 
+                               class="h-4 w-4 text-slate-800 focus:ring-slate-800 border-slate-300">
+                        <span class="ml-2 text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">Nuevo Cliente</span>
+                    </label>
+                </div>
+
+                <div id="div-cliente-existente" class="transition-all duration-300 ease-in-out">
+                    <div class="max-w-md">
+                        <label for="cliente_id" class="block text-sm font-medium text-slate-700 mb-1.5">Seleccionar Cliente</label>
+                        <select name="cliente_id" id="cliente_id" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="">-- Seleccione un cliente --</option>
+                            <% clientes.forEach(cliente => { %>
+                                <option value="<%= cliente.id %>">
+                                    <%= cliente.nombre_completo %> (DNI/RUC: <%= cliente.dni_ruc %>)
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="div-cliente-nuevo" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300 ease-in-out mt-4">
+                    
+                    <div>
+                        <label for="equipo" class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de cliente</label>
+                        <select name="equipo" id="equipo" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Interno">Interno</option>
+                            <option value="Franquiciado">Franquiciado</option>
+                            <option value="Externo">Externo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="nombre_completo" class="block text-sm font-medium text-slate-700 mb-1.5">Nombre Completo</label>
+                        <input type="text" name="nombre_completo" id="nombre_completo" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="dni_ruc" class="block text-sm font-medium text-slate-700 mb-1.5">DNI o RUC</label>
+                        <input type="text" name="dni_ruc" id="dni_ruc" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="estado_civil" class="block text-sm font-medium text-slate-700 mb-1.5">Estado Civil</label>
+                        <select name="estado_civil" id="estado_civil" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                            <option value="Viudo">Viudo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="ocupacion" class="block text-sm font-medium text-slate-700 mb-1.5">Ocupación</label>
+                        <input type="text" name="ocupacion" id="ocupacion" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="celular" class="block text-sm font-medium text-slate-700 mb-1.5">Celular</label>
+                        <input type="text" name="celular" id="celular" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-3">
+                        <label for="direccion" class="block text-sm font-medium text-slate-700 mb-1.5">Dirección</label>
+                        <input type="text" name="direccion" id="direccion" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="distrito" class="block text-sm font-medium text-slate-700 mb-1.5">Distrito</label>
+                        <input type="text" name="distrito" id="distrito" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="provincia" class="block text-sm font-medium text-slate-700 mb-1.5">Provincia</label>
+                        <input type="text" name="provincia" id="provincia" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="departamento" class="block text-sm font-medium text-slate-700 mb-1.5">Departamento</label>
+                        <input type="text" name="departamento" id="departamento" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-lg font-medium text-slate-800 border-b border-slate-200 pb-2 mb-5">
+                    2. Datos del Lote y Venta
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div>
+                        <label for="mes_ultimo_deposito" class="block text-sm font-medium text-slate-700 mb-1.5">Mes último depósito</label>
+                        <input type="date" id="mes_ultimo_deposito" name="mes_ultimo_deposito" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="etapa" class="block text-sm font-medium text-slate-700 mb-1.5">Etapa</label>
+                        <input type="number" id="etapa" name="etapa" required placeholder="2" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label for="mz" class="block text-sm font-medium text-slate-700 mb-1.5">Manzana</label>
+                        <input type="text" id="mz" name="mz" required placeholder="A" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label for="lote" class="block text-sm font-medium text-slate-700 mb-1.5">Lote</label>
+                        <input type="text" id="lote" name="lote" required placeholder="15" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+
+                    <div>
+                        <label for="area" class="block text-sm font-medium text-slate-700 mb-1.5">Área (m²)</label>
+                        <input type="number" step="0.01" id="area" name="area" required placeholder="110.15" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label for="precio_lista" class="block text-sm font-medium text-slate-700 mb-1.5">Precio de lista</label>
+                        <input type="number" step="0.1" id="precio_lista" name="precio_lista" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="descuento" class="block text-sm font-medium text-slate-700 mb-1.5">Descuento</label>
+                        <input type="number" step="0.1" id="descuento" name="descuento" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="tipo_moneda" class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de moneda</label>
+                        <select id="tipo_moneda" name="tipo_moneda" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Soles">Soles (S/)</option>
+                            <option value="Dolares">Dólares ($)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="precio_final_dolares" class="block text-sm font-medium text-slate-700 mb-1.5">Precio final ($)</label>
+                        <input type="number" step="0.1" id="precio_final_dolares" name="precio_final_dolares" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 text-blue-800 font-medium bg-slate-50">
+                    </div>
+                    <div>
+                        <label for="precio_final_soles" class="block text-sm font-medium text-slate-700 mb-1.5">Precio final (S/)</label>
+                        <input type="number" step="0.1" id="precio_final_soles" name="precio_final_soles" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 text-blue-800 font-medium bg-slate-50">
+                    </div>
+                    <div>
+                        <label for="tipo_cambio" class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de cambio</label>
+                        <input type="number" id="tipo_cambio" name="tipo_cambio" step="0.01" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="monto_total_abonado" class="block text-sm font-medium text-slate-700 mb-1.5">Total abonado</label>
+                        <input type="number" id="monto_total_abonado" name="monto_total_abonado" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+
+                    <div>
+                        <label for="modalidad" class="block text-sm font-medium text-slate-700 mb-1.5">Modalidad</label>
+                        <select id="modalidad" name="modalidad" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Al_contado">Al contado</option>
+                            <option value="Financiado">Financiado</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="numero_cuotas" class="block text-sm font-medium text-slate-700 mb-1.5">N° de cuotas</label>
+                        <input type="number" id="numero_cuotas" name="numero_cuotas" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="medio_pago" class="block text-sm font-medium text-slate-700 mb-1.5">Medio de pago</label>
+                        <select id="medio_pago" name="medio_pago" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Deposito">Depósito</option>
+                            <option value="Cheque_de_gerencia">Cheque de gerencia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="banco_emisor" class="block text-sm font-medium text-slate-700 mb-1.5">Banco emisor</label>
+                        <input type="text" id="banco_emisor" name="banco_emisor" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+
+                    <div>
+                        <label for="numero_operacion" class="block text-sm font-medium text-slate-700 mb-1.5">N° operación</label>
+                        <input type="text" id="numero_operacion" name="numero_operacion" required class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                    </div>
+                    <div>
+                        <label for="tipo_comprobante" class="block text-sm font-medium text-slate-700 mb-1.5">Tipo de comprobante</label>
+                        <select id="tipo_comprobante" name="tipo_comprobante" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800">
+                            <option value="Boleta">Boleta</option>
+                            <option value="Factura">Factura</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="url_archivo" class="block text-sm font-medium text-slate-700 mb-1.5">Subir documento/voucher</label>
+                        <div class="mt-1 flex justify-center px-6 pt-3 pb-4 border-2 border-slate-300 border-dashed rounded-md hover:border-slate-400 transition-colors bg-white">
+                            <div class="space-y-1 text-center">
+                                <svg class="mx-auto h-8 w-8 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                <div class="flex text-sm text-slate-600 justify-center">
+                                    <label for="url_archivo" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-slate-500">
+                                        <span>Seleccionar un archivo</span>
+                                        <input id="url_archivo" name="url_archivo" type="file" class="sr-only">
+                                    </label>
+                                </div>
+                                <p class="text-xs text-slate-500">PDF, PNG, JPG hasta 5MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-4">
+                        <label for="observaciones" class="block text-sm font-medium text-slate-700 mb-1.5">Observaciones</label>
+                        <textarea id="observaciones" name="observaciones" rows="3" class="block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 sm:text-sm text-slate-800 placeholder-slate-400"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-200 flex justify-end">
+                <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5">
+                    Guardar Registro de Venta
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleClienteForm() {
+            const tipo = document.querySelector('input[name="tipo_cliente"]:checked').value;
+            const divExistente = document.getElementById('div-cliente-existente');
+            const divNuevo = document.getElementById('div-cliente-nuevo');
+            const selectExistente = document.getElementById('cliente_id');
+
+            if (tipo === 'existente') {
+                divExistente.classList.remove('hidden');
+                divNuevo.classList.add('hidden');
+                selectExistente.required = true;
+            } else {
+                divExistente.classList.add('hidden');
+                divNuevo.classList.remove('hidden');
+                selectExistente.required = false;
+                selectExistente.value = "";
+            }
+        }
+
+    toggleClienteForm();
+    
+    function toggleClienteForm() {
+        const tipo = document.querySelector('input[name="tipo_cliente"]:checked').value;
+        const divExistente = document.getElementById('div-cliente-existente');
+        const divNuevo = document.getElementById('div-cliente-nuevo');
+
+        if (tipo === 'existente') {
+            divExistente.classList.remove('hidden');
+            divNuevo.classList.add('hidden');
+        } else {
+            divExistente.classList.add('hidden');
+            divNuevo.classList.remove('hidden');
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', toggleClienteForm);
+</script>
+<%- include('../partials/footer') %>

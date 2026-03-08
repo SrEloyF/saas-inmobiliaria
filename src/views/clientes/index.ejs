@@ -1,0 +1,148 @@
+<%- include('../partials/header', { title: 'Lista de clientes' }) %>
+<!--
+    <h1>Lista de Clientes</h1>
+    <a href="/clientes/create"><button>+ Nuevo Cliente</button></a>
+    <a href="/">Ventas</a>
+    
+    <table border="1" cellpadding="10" style="margin-top: 20px; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>DNI/RUC</th>
+                <th>Celular</th>
+                <th>Equipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% clientes.forEach(cliente => { %>
+                <tr>
+                    <td><%= cliente.id %></td>
+                    <td><%= cliente.nombre_completo %></td>
+                    <td><%= cliente.dni_ruc %></td>
+                    <td><%= cliente.celular %></td>
+                    <td><%= cliente.equipo %></td>
+                    <td>
+                        <a href="/clientes/<%= cliente.id %>/edit">Editar</a>
+                        
+                        <form action="/clientes/<%= cliente.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
+                            <button type="submit" style="color: red;">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+-->
+<div class="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8 font-sans">
+    
+    <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">Directorio de Clientes</h1>
+                <p class="text-sm text-slate-500 mt-1">Administración de la cartera de clientes de ALPEX.</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <a href="/" class="inline-flex justify-center items-center px-4 py-2.5 bg-white border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 transition-all">
+                    <svg class="w-5 h-5 mr-2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Ver Ventas
+                </a>
+                
+                <a href="/clientes/create" class="inline-flex justify-center items-center px-4 py-2.5 bg-slate-800 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800 transition-all transform hover:-translate-y-0.5">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
+                    Nuevo Cliente
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200">
+                    <thead class="bg-slate-800">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-100 uppercase tracking-wider">ID</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-100 uppercase tracking-wider">Nombre Completo</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-100 uppercase tracking-wider">DNI / RUC</th>
+                            <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-slate-100 uppercase tracking-wider">Celular</th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-100 uppercase tracking-wider">Equipo</th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-semibold text-slate-100 uppercase tracking-wider">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-slate-100">
+                        
+                        <% if (!clientes || clientes.length === 0) { %>
+                            <tr>
+                                <td colspan="6" class="px-6 py-16 text-center text-slate-500 bg-slate-50/50">
+                                    <svg class="mx-auto h-12 w-12 text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                    <p class="text-base font-medium text-slate-800">No hay clientes registrados</p>
+                                    <p class="text-sm mt-1">Comienza agregando un nuevo cliente al directorio.</p>
+                                </td>
+                            </tr>
+                        <% } else { %>
+
+                            <% clientes.forEach(cliente => { %>
+                                <tr class="hover:bg-slate-50 transition-colors duration-150">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-500">
+                                        #<%= cliente.id %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                        <%= cliente.nombre_completo %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600 font-mono">
+                                        <%= cliente.dni_ruc %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                                        <%= cliente.celular %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
+                                            <%= cliente.equipo %>
+                                        </span>
+                                    </td>
+                                    
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
+                                        <div class="flex items-center justify-center space-x-4">
+                                            <a href="/clientes/<%= cliente.id %>/edit" class="text-slate-400 hover:text-blue-600 transition-colors" title="Editar Cliente">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                            </a>
+                                            
+                                            <form action="/clientes/<%= cliente.id %>/delete" method="POST" class="inline-block m-0" onsubmit="return confirm('¿Seguro que deseas eliminar a <%= cliente.nombre_completo %> del sistema?');">
+                                                <button type="submit" class="text-slate-400 hover:text-red-600 transition-colors cursor-pointer" title="Eliminar Cliente">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <% if (clientes && clientes.length > 0) { %>
+            <div class="bg-slate-50 px-6 py-4 border-t border-slate-200">
+                <p class="text-sm text-slate-500">
+                    Mostrando un total de <span class="font-medium text-slate-900"><%= clientes.length %></span> clientes en el directorio.
+                </p>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>
